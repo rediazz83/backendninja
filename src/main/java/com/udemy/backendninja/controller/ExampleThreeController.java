@@ -16,6 +16,11 @@ public class ExampleThreeController {
     private static final String FORM_VIEW = "form";
     private static final String RESULT_VIEW = "result";
 
+    @GetMapping("/")
+    public String redirect() {
+        return "redirect:/example-three/show-form";
+    }
+
     /*Endpoint: /example-three/show-form
     Generacion del from view*/
     @GetMapping("/show-form")
