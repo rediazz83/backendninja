@@ -37,4 +37,11 @@ public class ExampleThreeController {
         response.addObject("person", person);
         return response;
     }
+
+    //Endpoint: /example-three/catastrophic-error
+    @GetMapping("/catastrophic-error")
+    public String catastrophicError() {
+        String error = String.valueOf(5/0);
+        return error;
+    }
 }
