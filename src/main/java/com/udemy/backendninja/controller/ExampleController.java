@@ -1,6 +1,8 @@
 package com.udemy.backendninja.controller;
 
 import com.udemy.backendninja.model.Person;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,29 +16,42 @@ import java.util.List;
 @RequestMapping("/example")
 public class ExampleController {
 
+    private static final Log LOGGER = LogFactory.getLog(ExampleController.class);
     public static final String EXAMPLE_VIEW = "example";
 
     //Endpoint: /example/example-string
     @GetMapping("/example-string")
     public String exampleString(Model model) {
+        LOGGER.info("METHOD: exampleString");
+
         model.addAttribute("people", getPeople());
+
+        LOGGER.info("TEMPLATE: " + EXAMPLE_VIEW + " DATA: people");
         return EXAMPLE_VIEW;
     }
 
     //Endpoint: /example/example-model-and-view
     @GetMapping("/example-model-and-view")
     public ModelAndView exampleModelAndView() {
+        LOGGER.info("METHOD: exampleModelAndView");
+
         ModelAndView modelAndView = new ModelAndView(EXAMPLE_VIEW);
         modelAndView.addObject("people", getPeople());
+
+        LOGGER.info("TEMPLATE: " + EXAMPLE_VIEW + " DATA: people");
         return modelAndView;
     }
 
     private List<Person> getPeople() {
+        LOGGER.info("METHOD: getPeople");
+
         List<Person> people = new ArrayList<Person>();
         people.add(new Person("Rodrigo", 35));
         people.add(new Person("Pamela", 35));
         people.add(new Person("Fernanda", 5));
         people.add(new Person("Julieta", 4));
+
+        LOGGER.info("RETURN DATA: People size " + people.size());
 
         return people;
     }
