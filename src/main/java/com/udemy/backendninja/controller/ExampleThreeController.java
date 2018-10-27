@@ -5,12 +5,15 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
+
+import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/example-three")
@@ -39,13 +42,17 @@ public class ExampleThreeController {
 
     //Endpoint: /example-three/add-person
     @PostMapping("/add-person")
-    public ModelAndView addPerson(@ModelAttribute("person") Person person) {
+    public ModelAndView addPerson(@Valid @ModelAttribute("person") Person person, BindingResult bindingResult) {
         LOGGER.info("METHOD: addPerson -- PARAMS: " + person);
 
-        ModelAndView response = new ModelAndView(RESULT_VIEW);
-        response.addObject("person", person);
+        ModelAndView response = null;
 
-        LOGGER.info("TEMPLATE: " + RESULT_VIEW + " -- DATA: " + person);
+        if(bindingResult.hasErrors()) {
+            response = setModelWithErrors();
+        } else {
+            response = setModelWithoutErrors(person);
+        }
+
         return response;
     }
 
@@ -56,5 +63,26 @@ public class ExampleThreeController {
 
         String error = String.valueOf(5/0);
         return error;
+    }
+
+    private ModelAndView setModelWithErrors() {
+        LOGGER.info("METHOD: setModelWithErrors");
+
+        ModelAndView modelAndView = new ModelAndView(FORM_VIEW);
+
+        LOGGER.error("TEMPLATE: " + FORM_VIEW);
+
+        return modelAndView;
+    }
+
+    private ModelAndView setModelWithoutErrors(Person person) {
+        LOGGER.info("METHOD: setModelWithErrors");
+
+        ModelAndView modelAndView = new ModelAndView(RESULT_VIEW);
+        modelAndView.addObject("person", person);
+
+        LOGGER.info("TEMPLATE: " + RESULT_VIEW + " -- DATA: " + person);
+
+        return modelAndView;
     }
 }
