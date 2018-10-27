@@ -24,14 +24,14 @@ public class ExampleController {
 
     @Autowired
     @Qualifier("exampleComponent")
-    private ExampleComponent exampleComponent;
+    private ExampleComponent component;
 
     //Endpoint: /example/example-string
     @GetMapping("/example-string")
     public String exampleString(Model model) {
         LOGGER.info("METHOD: exampleString");
 
-        exampleComponent.sayHello();
+        component.sayHello();
 
         model.addAttribute("people", getPeople());
 
