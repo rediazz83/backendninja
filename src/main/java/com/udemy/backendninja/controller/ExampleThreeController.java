@@ -45,12 +45,9 @@ public class ExampleThreeController {
     public ModelAndView addPerson(@Valid @ModelAttribute("person") Person person, BindingResult bindingResult) {
         LOGGER.info("METHOD: addPerson -- PARAMS: " + person);
 
-        ModelAndView response = null;
-
+        ModelAndView response = setModelWithoutErrors(person);
         if(bindingResult.hasErrors()) {
             response = setModelWithErrors();
-        } else {
-            response = setModelWithoutErrors(person);
         }
 
         return response;
