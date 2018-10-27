@@ -1,8 +1,11 @@
 package com.udemy.backendninja.controller;
 
+import com.udemy.backendninja.component.ExampleComponent;
 import com.udemy.backendninja.model.Person;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,10 +22,16 @@ public class ExampleController {
     private static final Log LOGGER = LogFactory.getLog(ExampleController.class);
     public static final String EXAMPLE_VIEW = "example";
 
+    @Autowired
+    @Qualifier("exampleComponent")
+    private ExampleComponent exampleComponent;
+
     //Endpoint: /example/example-string
     @GetMapping("/example-string")
     public String exampleString(Model model) {
         LOGGER.info("METHOD: exampleString");
+
+        exampleComponent.sayHello();
 
         model.addAttribute("people", getPeople());
 
