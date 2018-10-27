@@ -45,7 +45,7 @@ public class ExampleThreeController {
         ModelAndView response = new ModelAndView(RESULT_VIEW);
         response.addObject("person", person);
 
-        LOGGER.info("TEMPLATE: " + RESULT_VIEW + " DATA: " + person);
+        LOGGER.info("TEMPLATE: " + RESULT_VIEW + " -- DATA: " + person);
         return response;
     }
 

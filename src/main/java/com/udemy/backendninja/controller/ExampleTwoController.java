@@ -40,7 +40,7 @@ public class ExampleTwoController {
         modelAndView.addObject("name", name);
         modelAndView.addObject("lastName", lastName);
 
-        LOGGER.info("TEMPLATE: " + EXAMPLE_TWO_VIEW + " DATA: " + name + ", " + lastName);
+        LOGGER.info("TEMPLATE: " + EXAMPLE_TWO_VIEW + " -- DATA: " + name + ", " + lastName);
         return modelAndView;
     }
 }
