@@ -1,5 +1,6 @@
 package com.udemy.backendninja.service.impl;
 
+import com.udemy.backendninja.entity.Course;
 import com.udemy.backendninja.model.Person;
 import com.udemy.backendninja.repository.CourseRepository;
 import com.udemy.backendninja.service.ExampleService;
@@ -23,7 +24,8 @@ public class ExampleServiceImpl implements ExampleService {
     public List<Person> getPeople() {
         LOGGER.info("METHOD: getPeople");
 
-        courseRepository.findById(1);
+        Course course = courseRepository.findById(1);
+        LOGGER.info("Course from repository: " + course);
 
         List<Person> people = new ArrayList<Person>();
         people.add(new Person("Rodrigo", 35));
