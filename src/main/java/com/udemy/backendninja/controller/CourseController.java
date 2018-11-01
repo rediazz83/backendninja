@@ -7,6 +7,7 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
 @ControllerAdvice
 @RequestMapping("/courses")
@@ -30,10 +31,10 @@ public class CourseController {
     }
 
     @PostMapping("/add-course")
-    public String addCourse(@ModelAttribute("course")Course course) {
+    public RedirectView addCourse(@ModelAttribute("course")Course course) {
         LOGGER.info("METHOD: addCourse -- PARAMS: " + course);
 
         courseService.addCourse(course);
-        return "redirect:/list-courses";
+        return new RedirectView("/courses/list-courses");
     }
 }
