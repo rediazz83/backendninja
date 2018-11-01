@@ -25,12 +25,14 @@ public class CourseController {
         LOGGER.info("METHOD: listAllCourses");
 
         ModelAndView response = new ModelAndView(COURSES_VIEW);
+        response.addObject("course", new Course());
         response.addObject("courses", courseService.listAllCourses());
 
         LOGGER.info("TEMPLATE: " + COURSES_VIEW);
         return response;
     }
 
+    //Endpoint: /courses/add-course
     @PostMapping("/add-course")
     public RedirectView addCourse(@ModelAttribute("course")Course course) {
         LOGGER.info("METHOD: addCourse -- PARAMS: " + course);
