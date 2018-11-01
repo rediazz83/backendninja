@@ -19,6 +19,7 @@ public class CourseController {
     public static final String COURSES_VIEW = "courses";
     private static final Log LOGGER = LogFactory.getLog(CourseController.class);
 
+    //Endpoint: /courses/list-courses
     @GetMapping("/list-courses")
     public ModelAndView listAllCourses() {
         LOGGER.info("METHOD: listAllCourses");
