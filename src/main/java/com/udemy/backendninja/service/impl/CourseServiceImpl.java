@@ -1,6 +1,8 @@
 package com.udemy.backendninja.service.impl;
 
+import com.udemy.backendninja.converter.CourseConverter;
 import com.udemy.backendninja.entity.Course;
+import com.udemy.backendninja.model.CourseModel;
 import com.udemy.backendninja.repository.CourseRepository;
 import com.udemy.backendninja.service.CourseService;
 import org.apache.commons.logging.Log;
@@ -8,6 +10,7 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -18,40 +21,50 @@ public class CourseServiceImpl implements CourseService {
     @Autowired
     private CourseRepository courseRepository;
 
+    @Autowired
+    private CourseConverter courseConverter;
+
     @Override
-    public List<Course> listAllCourses() {
+    public List<CourseModel> listAllCourses() {
         LOGGER.info("METHOD: listAllCourses");
 
+        List<CourseModel> courseModelList = new ArrayList<>();
         List<Course> courses = courseRepository.findAll();
+        for(Course entity: courses) {
+            CourseModel model = courseConverter.entityToModel(entity);
+            courseModelList.add(model);
+        }
 
-        LOGGER.info("DATA SIZE RETURN: " + courses.size());
-        return courses;
+        LOGGER.info("DATA SIZE RETURN: " + courseModelList.size());
+        return courseModelList;
     }
 
     @Override
-    public Course addCourse(Course course) {
-        LOGGER.info("METHOD: addCourse -- PARAMS: " + course);
+    public CourseModel addCourse(CourseModel courseModel) {
+        LOGGER.info("METHOD: addCourse -- PARAMS: " + courseModel);
 
-        Course thisCourse = courseRepository.save(course);
+        Course entity = courseRepository.save(courseConverter.modelToEntity(courseModel));
+        CourseModel newCourseModel = courseConverter.entityToModel(entity);
 
-        LOGGER.info("DATA RETURN: " + thisCourse);
-        return thisCourse;
+        LOGGER.info("DATA RETURN: " + newCourseModel);
+        return newCourseModel;
     }
 
     @Override
-    public Course updateCourse(Course course) {
-        LOGGER.info("METHOD: updateCourse -- PARAMS: " + course);
+    public CourseModel updateCourse(CourseModel courseModel) {
+        LOGGER.info("METHOD: updateCourse -- PARAMS: " + courseModel);
 
-        Course thisCourse = courseRepository.save(course);
+        Course entity = courseRepository.save(courseConverter.modelToEntity(courseModel));
+        CourseModel newCourseModel = courseConverter.entityToModel(entity);
 
-        LOGGER.info("DATA RETURN: " + thisCourse);
-        return thisCourse;
+        LOGGER.info("DATA RETURN: " + newCourseModel);
+        return newCourseModel;
     }
 
     @Override
-    public void removeCourse(Course course) {
-        LOGGER.info("METHOD: removeCourse -- PARAMS: " + course);
+    public void removeCourse(CourseModel courseModel) {
+        LOGGER.info("METHOD: removeCourse -- PARAMS: " + courseModel);
 
-        courseRepository.delete(course);
+        courseRepository.delete(courseConverter.modelToEntity(courseModel));
     }
 }

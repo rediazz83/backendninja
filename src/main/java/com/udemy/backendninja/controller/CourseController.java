@@ -1,6 +1,6 @@
 package com.udemy.backendninja.controller;
 
-import com.udemy.backendninja.entity.Course;
+import com.udemy.backendninja.model.CourseModel;
 import com.udemy.backendninja.service.CourseService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -25,7 +25,7 @@ public class CourseController {
         LOGGER.info("METHOD: listAllCourses");
 
         ModelAndView response = new ModelAndView(COURSES_VIEW);
-        response.addObject("course", new Course());
+        response.addObject("course", new CourseModel());
         response.addObject("courses", courseService.listAllCourses());
 
         LOGGER.info("TEMPLATE: " + COURSES_VIEW);
@@ -34,7 +34,7 @@ public class CourseController {
 
     //Endpoint: /courses/add-course
     @PostMapping("/add-course")
-    public RedirectView addCourse(@ModelAttribute("course") Course course) {
+    public RedirectView addCourse(@ModelAttribute("course") CourseModel course) {
         LOGGER.info("METHOD: addCourse -- PARAMS: " + course);
 
         courseService.addCourse(course);
