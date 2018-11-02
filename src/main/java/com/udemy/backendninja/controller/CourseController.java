@@ -34,7 +34,7 @@ public class CourseController {
 
     //Endpoint: /courses/add-course
     @PostMapping("/add-course")
-    public RedirectView addCourse(@ModelAttribute("course")Course course) {
+    public RedirectView addCourse(@ModelAttribute("course") Course course) {
         LOGGER.info("METHOD: addCourse -- PARAMS: " + course);
 
         courseService.addCourse(course);
